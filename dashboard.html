@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Girls Hostel Management System – Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#0d0518;--sidebar:#130822;--card:#1a0d2e;--card2:#20103a;
+  --accent:#c850c0;--accent2:#8b2fc9;--pink:#e879f9;--gold:#f0d060;
+  --green:#4ade80;--red:#f87171;--text:#e8d5f5;--muted:#9b7bb8;
+  --border:rgba(200,80,192,0.18);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--text);display:flex;min-height:100vh;}
+
+/* SIDEBAR */
+.sidebar{width:230px;min-height:100vh;background:var(--sidebar);display:flex;flex-direction:column;align-items:center;padding:28px 0 20px;position:fixed;top:0;left:0;z-index:100;border-right:1px solid var(--border);}
+.logo-wrap{text-align:center;margin-bottom:10px;}
+.logo-icon{font-size:2.4rem;color:var(--pink);}
+.logo-title{font-size:.85rem;font-weight:700;letter-spacing:.06em;color:var(--text);margin-top:4px;}
+.managed-by{font-size:.55rem;letter-spacing:.2em;color:var(--muted);margin-top:12px;text-transform:uppercase;}
+.zaneera{font-family:'Dancing Script',cursive;font-size:1.7rem;color:var(--pink);line-height:1.1;}
+.divider{width:70%;height:1px;background:var(--border);margin:16px 0;}
+nav{width:100%;}
+nav a{display:flex;align-items:center;gap:12px;padding:11px 28px;color:var(--muted);text-decoration:none;font-size:.8rem;font-weight:600;letter-spacing:.04em;transition:.2s;border-left:3px solid transparent;}
+nav a:hover{color:var(--text);background:rgba(200,80,192,.08);}
+nav a.active{color:var(--pink);background:rgba(200,80,192,.13);border-left-color:var(--pink);}
+nav a i{width:18px;text-align:center;}
+.sidebar-footer{margin-top:auto;font-size:.55rem;color:var(--muted);text-align:center;padding:0 10px;line-height:1.7;}
+
+/* MAIN */
+.main{margin-left:230px;flex:1;display:flex;flex-direction:column;min-height:100vh;}
+
+/* TOPBAR */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:16px 36px;background:rgba(13,5,24,.7);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:50;}
+.page-title{font-size:.9rem;font-weight:700;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;}
+.user-pill{display:flex;align-items:center;gap:10px;background:var(--card2);border:1px solid var(--border);border-radius:40px;padding:7px 16px 7px 7px;cursor:pointer;}
+.user-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:.9rem;}
+.user-info{line-height:1.2;}
+.user-name{font-size:.78rem;font-weight:700;color:var(--text);}
+.user-role{font-size:.62rem;color:var(--muted);}
+
+/* HERO BANNER */
+.hero{position:relative;overflow:hidden;padding:40px 36px 32px;background:linear-gradient(120deg,#1a0535 0%,#2d0a50 60%,#3b0764 100%);}
+.hero::before{content:'';position:absolute;right:-60px;top:-60px;width:380px;height:380px;border-radius:50%;background:radial-gradient(circle,rgba(200,80,192,.22) 0%,transparent 70%);pointer-events:none;}
+.hero-flowers{position:absolute;right:0;top:0;height:100%;opacity:.35;font-size:8rem;display:flex;align-items:center;padding-right:36px;pointer-events:none;}
+.welcome-sub{font-size:.7rem;letter-spacing:.22em;color:var(--pink);text-transform:uppercase;font-style:italic;margin-bottom:6px;}
+.welcome-title{font-size:2.1rem;font-weight:800;color:#fff;letter-spacing:-.01em;line-height:1.15;}
+.welcome-managed{font-size:.65rem;letter-spacing:.22em;color:var(--muted);margin-top:10px;text-transform:uppercase;}
+.welcome-zaneera{font-family:'Dancing Script',cursive;font-size:2rem;color:var(--pink);line-height:1;}
+
+/* STAT CARDS */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;padding:28px 36px 0;}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px 20px;display:flex;flex-direction:column;gap:8px;position:relative;overflow:hidden;transition:.25s;}
+.stat-card:hover{border-color:var(--accent);transform:translateY(-3px);}
+.stat-card::after{content:'';position:absolute;bottom:-20px;right:-20px;width:80px;height:80px;border-radius:50%;opacity:.07;background:var(--pink);}
+.stat-icon{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;margin-bottom:4px;}
+.stat-icon.purple{background:rgba(139,47,201,.22);color:var(--accent2);}
+.stat-icon.pink{background:rgba(232,121,249,.15);color:var(--pink);}
+.stat-icon.gold{background:rgba(240,208,96,.12);color:var(--gold);}
+.stat-icon.green{background:rgba(74,222,128,.12);color:var(--green);}
+.stat-label{font-size:.7rem;font-weight:600;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;}
+.stat-value{font-size:2.2rem;font-weight:800;color:#fff;line-height:1;}
+.stat-desc{font-size:.65rem;color:var(--muted);}
+.stat-corner{position:absolute;bottom:14px;right:14px;font-size:1.5rem;opacity:.13;}
+
+/* QUICK ACTIONS */
+.section-title{font-size:.75rem;font-weight:800;letter-spacing:.1em;color:var(--text);text-transform:uppercase;display:flex;align-items:center;gap:8px;}
+.section-title::before{content:'';width:3px;height:16px;background:var(--pink);border-radius:4px;}
+.actions-section{padding:28px 36px;}
+.actions-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-top:18px;}
+.action-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px 10px;text-align:center;cursor:pointer;transition:.25s;text-decoration:none;color:var(--text);}
+.action-card:hover{border-color:var(--accent);background:var(--card2);transform:translateY(-4px);}
+.action-icon{font-size:1.6rem;margin-bottom:10px;}
+.action-label{font-size:.75rem;font-weight:700;margin-bottom:4px;}
+.action-desc{font-size:.6rem;color:var(--muted);line-height:1.4;}
+
+/* MOTTO */
+.motto{margin:18px 36px 36px;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:22px;text-align:center;}
+.motto-text{font-style:italic;font-size:.95rem;color:var(--muted);letter-spacing:.02em;}
+.motto-text span{color:var(--pink);}
+.motto-deco{margin-top:10px;color:var(--pink);opacity:.5;font-size:1.1rem;letter-spacing:8px;}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="logo-wrap">
+    <div class="logo-icon"><i class="fas fa-home"></i></div>
+    <div class="logo-title">Girls Hostel<br>Management System</div>
+    <div class="managed-by">Managed By</div>
+    <div class="zaneera">Zaneera</div>
+  </div>
+  <div class="divider"></div>
+  <nav>
+    <a href="dashboard.html" class="active"><i class="fas fa-th-large"></i> Dashboard</a>
+    <a href="rooms.html"><i class="fas fa-bed"></i> Rooms</a>
+    <a href="#"><i class="fas fa-user-friends"></i> Visitors</a>
+    <a href="#"><i class="fas fa-comment-dots"></i> Complaints</a>
+    <a href="#"><i class="fas fa-bell"></i> Notices</a>
+    <a href="#"><i class="fas fa-calendar-alt"></i> Leave Requests</a>
+    <a href="allocation.html"><i class="fas fa-user-plus"></i> Allocation</a>
+    <a href="checkout.html"><i class="fas fa-sign-out-alt"></i> Checkout</a>
+    <a href="#"><i class="fas fa-users"></i> Staff</a>
+    <a href="#"><i class="fas fa-cog"></i> Settings</a>
+    <a href="#"><i class="fas fa-power-off"></i> Logout</a>
+  </nav>
+  <div class="sidebar-footer">© 2024 Girls Hostel Management System<br>All rights reserved.</div>
+</aside>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="topbar">
+    <span class="page-title">Dashboard</span>
+    <div class="user-pill">
+      <div class="user-avatar"><i class="fas fa-user"></i></div>
+      <div class="user-info">
+        <div class="user-name">Admin</div>
+        <div class="user-role">Administrator</div>
+      </div>
+      <i class="fas fa-chevron-down" style="color:var(--muted);font-size:.7rem;margin-left:4px;"></i>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="welcome-sub">Welcome to</div>
+    <div class="welcome-title">Girls Hostel Management System</div>
+    <div class="welcome-managed">Managed By</div>
+    <div class="welcome-zaneera">Zaneera</div>
+    <div class="hero-flowers">🌸</div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon purple"><i class="fas fa-bed"></i></div>
+      <div class="stat-label">Total Rooms</div>
+      <div class="stat-value">50</div>
+      <div class="stat-desc">Manage all hostel rooms</div>
+      <div class="stat-corner"><i class="fas fa-building"></i></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon pink"><i class="fas fa-user-friends"></i></div>
+      <div class="stat-label">Total Visitors</div>
+      <div class="stat-value">32</div>
+      <div class="stat-desc">View visitor records</div>
+      <div class="stat-corner"><i class="fas fa-id-card"></i></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon gold"><i class="fas fa-comment-dots"></i></div>
+      <div class="stat-label">Total Complaints</div>
+      <div class="stat-value">12</div>
+      <div class="stat-desc">View &amp; resolve complaints</div>
+      <div class="stat-corner"><i class="fas fa-exclamation-triangle"></i></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon green"><i class="fas fa-calendar-check"></i></div>
+      <div class="stat-label">Leave Requests</div>
+      <div class="stat-value">18</div>
+      <div class="stat-desc">View leave applications</div>
+      <div class="stat-corner"><i class="fas fa-list"></i></div>
+    </div>
+  </div>
+
+  <!-- QUICK ACTIONS -->
+  <div class="actions-section">
+    <div class="section-title">Quick Actions</div>
+    <div class="actions-grid">
+      <a href="rooms.html" class="action-card">
+        <div class="action-icon" style="color:#e879f9;"><i class="fas fa-bed"></i></div>
+        <div class="action-label">Manage Rooms</div>
+        <div class="action-desc">Add, Update &amp; View Room Details</div>
+      </a>
+      <a href="#" class="action-card">
+        <div class="action-icon" style="color:#f87171;"><i class="fas fa-user-friends"></i></div>
+        <div class="action-label">Manage Visitors</div>
+        <div class="action-desc">Add, Update &amp; View Visitor Records</div>
+      </a>
+      <a href="#" class="action-card">
+        <div class="action-icon" style="color:#818cf8;"><i class="fas fa-comment-dots"></i></div>
+        <div class="action-label">Manage Complaints</div>
+        <div class="action-desc">View &amp; Resolve Complaints</div>
+      </a>
+      <a href="#" class="action-card">
+        <div class="action-icon" style="color:#f0d060;"><i class="fas fa-bell"></i></div>
+        <div class="action-label">Manage Notices</div>
+        <div class="action-desc">Add, Update &amp; View Notices</div>
+      </a>
+      <a href="#" class="action-card">
+        <div class="action-icon" style="color:#4ade80;"><i class="fas fa-calendar-alt"></i></div>
+        <div class="action-label">Leave Requests</div>
+        <div class="action-desc">View &amp; Approve Leave Requests</div>
+      </a>
+      <a href="#" class="action-card">
+        <div class="action-icon" style="color:#c850c0;"><i class="fas fa-users"></i></div>
+        <div class="action-label">Manage Staff</div>
+        <div class="action-desc">Add, Update &amp; View Staff Details</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- MOTTO -->
+  <div class="motto">
+    <div class="motto-text"><span>"</span> Empowering Comfort, Ensuring Security, Inspiring Growth. <span>"</span></div>
+    <div class="motto-deco">✿ ❧ ✿</div>
+  </div>
+</div>
+
+</body>
+</html>

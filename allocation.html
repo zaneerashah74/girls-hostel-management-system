@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Girls Hostel – Student Allocation</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#0d0518;--sidebar:#130822;--card:#1a0d2e;--card2:#20103a;
+  --accent:#c850c0;--pink:#e879f9;--gold:#f0d060;--green:#4ade80;
+  --red:#f87171;--text:#e8d5f5;--muted:#9b7bb8;--border:rgba(200,80,192,0.18);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--text);display:flex;min-height:100vh;}
+.sidebar{width:230px;min-height:100vh;background:var(--sidebar);display:flex;flex-direction:column;align-items:center;padding:28px 0 20px;position:fixed;top:0;left:0;z-index:100;border-right:1px solid var(--border);}
+.logo-icon{font-size:2.4rem;color:var(--pink);}
+.logo-title{font-size:.85rem;font-weight:700;letter-spacing:.06em;color:var(--text);margin-top:4px;text-align:center;}
+.managed-by{font-size:.55rem;letter-spacing:.2em;color:var(--muted);margin-top:12px;text-transform:uppercase;}
+.zaneera{font-family:'Dancing Script',cursive;font-size:1.7rem;color:var(--pink);}
+.divider{width:70%;height:1px;background:var(--border);margin:16px 0;}
+nav{width:100%;}
+nav a{display:flex;align-items:center;gap:12px;padding:11px 28px;color:var(--muted);text-decoration:none;font-size:.8rem;font-weight:600;letter-spacing:.04em;transition:.2s;border-left:3px solid transparent;}
+nav a:hover{color:var(--text);background:rgba(200,80,192,.08);}
+nav a.active{color:var(--pink);background:rgba(200,80,192,.13);border-left-color:var(--pink);}
+nav a i{width:18px;text-align:center;}
+.sidebar-footer{margin-top:auto;font-size:.55rem;color:var(--muted);text-align:center;padding:0 10px;line-height:1.7;}
+.main{margin-left:230px;flex:1;padding:32px 36px;}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;}
+.page-heading{font-size:1.5rem;font-weight:800;color:#fff;}
+.page-heading span{color:var(--pink);}
+.user-pill{display:flex;align-items:center;gap:10px;background:var(--card2);border:1px solid var(--border);border-radius:40px;padding:7px 16px 7px 7px;}
+.user-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#8b2fc9);display:flex;align-items:center;justify-content:center;font-size:.9rem;}
+.user-name{font-size:.78rem;font-weight:700;}
+.user-role{font-size:.62rem;color:var(--muted);}
+
+/* TWO-COLUMN LAYOUT */
+.layout{display:grid;grid-template-columns:1fr 1.4fr;gap:24px;align-items:start;}
+
+/* FORM CARD */
+.form-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:28px;}
+.form-card h3{font-size:1rem;font-weight:800;color:#fff;margin-bottom:6px;}
+.form-card p{font-size:.72rem;color:var(--muted);margin-bottom:22px;}
+.form-group{margin-bottom:16px;}
+.form-group label{display:block;font-size:.7rem;font-weight:600;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.06em;}
+.form-group input,.form-group select{width:100%;background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:11px 14px;color:var(--text);font-family:'Montserrat',sans-serif;font-size:.82rem;outline:none;transition:.2s;}
+.form-group input:focus,.form-group select:focus{border-color:var(--accent);}
+.form-group select option{background:var(--card2);}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.submit-btn{width:100%;padding:13px;border-radius:12px;border:none;background:linear-gradient(135deg,var(--accent),#8b2fc9);color:#fff;font-family:'Montserrat',sans-serif;font-size:.88rem;font-weight:700;cursor:pointer;transition:.2s;margin-top:6px;display:flex;align-items:center;justify-content:center;gap:8px;}
+.submit-btn:hover{opacity:.88;transform:translateY(-1px);}
+
+/* TABLE CARD */
+.table-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:28px;}
+.table-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
+.table-header h3{font-size:1rem;font-weight:800;color:#fff;}
+.search-box{display:flex;align-items:center;gap:8px;background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:8px 12px;}
+.search-box input{background:none;border:none;outline:none;color:var(--text);font-family:'Montserrat',sans-serif;font-size:.78rem;width:160px;}
+.search-box input::placeholder{color:var(--muted);}
+table{width:100%;border-collapse:collapse;}
+th{font-size:.65rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;padding:10px 14px;text-align:left;border-bottom:1px solid var(--border);}
+td{font-size:.78rem;padding:12px 14px;border-bottom:1px solid rgba(200,80,192,.07);vertical-align:middle;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:rgba(200,80,192,.04);}
+.badge{padding:3px 10px;border-radius:20px;font-size:.62rem;font-weight:700;}
+.badge-active{background:rgba(74,222,128,.14);color:var(--green);}
+.badge-pending{background:rgba(240,208,96,.14);color:var(--gold);}
+.action-btns{display:flex;gap:6px;}
+.icon-btn{width:28px;height:28px;border-radius:7px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.75rem;transition:.2s;}
+.icon-btn.edit{background:rgba(200,80,192,.15);color:var(--pink);}
+.icon-btn.del{background:rgba(248,113,113,.12);color:var(--red);}
+.icon-btn:hover{opacity:.75;}
+
+/* SUCCESS TOAST */
+.toast{position:fixed;top:24px;right:24px;background:var(--card2);border:1px solid var(--green);border-radius:12px;padding:14px 20px;display:flex;align-items:center;gap:10px;font-size:.82rem;font-weight:600;color:var(--green);z-index:999;transform:translateX(200%);transition:.4s;}
+.toast.show{transform:translateX(0);}
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div style="text-align:center;margin-bottom:10px;">
+    <div class="logo-icon"><i class="fas fa-home"></i></div>
+    <div class="logo-title">Girls Hostel<br>Management System</div>
+    <div class="managed-by">Managed By</div>
+    <div class="zaneera">Zaneera</div>
+  </div>
+  <div class="divider"></div>
+  <nav>
+    <a href="dashboard.html"><i class="fas fa-th-large"></i> Dashboard</a>
+    <a href="rooms.html"><i class="fas fa-bed"></i> Rooms</a>
+    <a href="#"><i class="fas fa-user-friends"></i> Visitors</a>
+    <a href="#"><i class="fas fa-comment-dots"></i> Complaints</a>
+    <a href="#"><i class="fas fa-bell"></i> Notices</a>
+    <a href="#"><i class="fas fa-calendar-alt"></i> Leave Requests</a>
+    <a href="allocation.html" class="active"><i class="fas fa-user-plus"></i> Allocation</a>
+    <a href="checkout.html"><i class="fas fa-sign-out-alt"></i> Checkout</a>
+    <a href="#"><i class="fas fa-users"></i> Staff</a>
+    <a href="#"><i class="fas fa-cog"></i> Settings</a>
+    <a href="#"><i class="fas fa-power-off"></i> Logout</a>
+  </nav>
+  <div class="sidebar-footer">© 2024 Girls Hostel Management System<br>All rights reserved.</div>
+</aside>
+
+<div class="main">
+  <div class="topbar">
+    <div class="page-heading">Student <span>Allocation</span></div>
+    <div class="user-pill">
+      <div class="user-avatar"><i class="fas fa-user"></i></div>
+      <div>
+        <div class="user-name">Admin</div>
+        <div class="user-role">Administrator</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="layout">
+    <!-- FORM -->
+    <div class="form-card">
+      <h3>Assign Student to Room</h3>
+      <p>Fill in the details below to allocate a student to an available room.</p>
+      <div class="form-group">
+        <label>Student Name</label>
+        <input type="text" id="stuName" placeholder="Enter full name"/>
+      </div>
+      <div class="form-group">
+        <label>Student ID</label>
+        <input type="text" id="stuId" placeholder="e.g. STU-2024-001"/>
+      </div>
+      <div class="form-group">
+        <label>Department / Class</label>
+        <input type="text" id="stuDept" placeholder="e.g. Computer Science – BS2"/>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Room Number</label>
+          <select id="stuRoom">
+            <option value="">Select room</option>
+            <option>101 – Single</option>
+            <option>103 – Triple</option>
+            <option>201 – Single</option>
+            <option>202 – Double</option>
+            <option>301 – Double</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Bed Number</label>
+          <select id="stuBed">
+            <option>Bed A</option>
+            <option>Bed B</option>
+            <option>Bed C</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Check-in Date</label>
+          <input type="date" id="stuDate"/>
+        </div>
+        <div class="form-group">
+          <label>Contact Number</label>
+          <input type="text" id="stuContact" placeholder="+92 3XX XXXXXXX"/>
+        </div>
+      </div>
+      <button class="submit-btn" onclick="allocate()"><i class="fas fa-user-plus"></i> Allocate Room</button>
+    </div>
+
+    <!-- TABLE -->
+    <div class="table-card">
+      <div class="table-header">
+        <h3>Allocated Students</h3>
+        <div class="search-box">
+          <i class="fas fa-search" style="color:var(--muted);font-size:.8rem;"></i>
+          <input type="text" placeholder="Search student..."/>
+        </div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Student</th>
+            <th>Room</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="allocTable">
+          <tr><td>1</td><td><b>Ayesha Noor</b><br><span style="color:var(--muted);font-size:.65rem;">STU-2024-001</span></td><td>102 / Bed A</td><td>01 Jan 2024</td><td><span class="badge badge-active">Active</span></td><td><div class="action-btns"><button class="icon-btn edit"><i class="fas fa-edit"></i></button><button class="icon-btn del"><i class="fas fa-trash"></i></button></div></td></tr>
+          <tr><td>2</td><td><b>Fatima Zahra</b><br><span style="color:var(--muted);font-size:.65rem;">STU-2024-002</span></td><td>102 / Bed B</td><td>05 Jan 2024</td><td><span class="badge badge-active">Active</span></td><td><div class="action-btns"><button class="icon-btn edit"><i class="fas fa-edit"></i></button><button class="icon-btn del"><i class="fas fa-trash"></i></button></div></td></tr>
+          <tr><td>3</td><td><b>Sara Ahmed</b><br><span style="color:var(--muted);font-size:.65rem;">STU-2024-003</span></td><td>203 / Bed A</td><td>10 Feb 2024</td><td><span class="badge badge-active">Active</span></td><td><div class="action-btns"><button class="icon-btn edit"><i class="fas fa-edit"></i></button><button class="icon-btn del"><i class="fas fa-trash"></i></button></div></td></tr>
+          <tr><td>4</td><td><b>Hina Malik</b><br><span style="color:var(--muted);font-size:.65rem;">STU-2024-004</span></td><td>302 / Bed C</td><td>15 Feb 2024</td><td><span class="badge badge-pending">Pending</span></td><td><div class="action-btns"><button class="icon-btn edit"><i class="fas fa-edit"></i></button><button class="icon-btn del"><i class="fas fa-trash"></i></button></div></td></tr>
+          <tr><td>5</td><td><b>Zara Khan</b><br><span style="color:var(--muted);font-size:.65rem;">STU-2024-005</span></td><td>104 / Bed A</td><td>20 Mar 2024</td><td><span class="badge badge-active">Active</span></td><td><div class="action-btns"><button class="icon-btn edit"><i class="fas fa-edit"></i></button><button class="icon-btn del"><i class="fas fa-trash"></i></button></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"><i class="fas fa-check-circle"></i> Student allocated successfully!</div>
+
+<script>
+let count=6;
+function allocate(){
+  const name=document.getElementById('stuName').value.trim();
+  const id=document.getElementById('stuId').value.trim();
+  const room=document.getElementById('stuRoom').value;
+  const bed=document.getElementById('stuBed').value;
+  const date=document.getElementById('stuDate').value;
+  if(!name||!id||!room){alert('Please fill in Name, Student ID and Room.');return;}
+  const tbody=document.getElementById('allocTable');
+  const tr=document.createElement('tr');
+  const d=date?new Date(date).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}):'—';
+  tr.innerHTML=`<td>${count++}</td><td><b>${name}</b><br><span style="color:var(--muted);font-size:.65rem;">${id}</span></td><td>${room.split('–')[0].trim()} / ${bed}</td><td>${d}</td><td><span class="badge badge-pending">Pending</span></td><td><div class="action-btns"><button class="icon-btn edit"><i class="fas fa-edit"></i></button><button class="icon-btn del"><i class="fas fa-trash"></i></button></div></td>`;
+  tbody.appendChild(tr);
+  ['stuName','stuId','stuDept','stuContact'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('stuRoom').value='';
+  const t=document.getElementById('toast');
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
+</script>
+</body>
+</html>
